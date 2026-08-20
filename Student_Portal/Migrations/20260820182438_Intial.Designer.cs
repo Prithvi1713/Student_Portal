@@ -11,8 +11,8 @@ using Student_Portal.AppDbContext;
 namespace Student_Portal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260819053418_Initial")]
-    partial class Initial
+    [Migration("20260820182438_Intial")]
+    partial class Intial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,35 @@ namespace Student_Portal.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Student_Portal.Models.CourseMaster", b =>
+                {
+                    b.Property<int>("courseID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("courseID"));
+
+                    b.Property<string>("CourseCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CourseName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DepartmentID")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("courseID");
+
+                    b.HasIndex("DepartmentID");
+
+                    b.ToTable("courseMasters");
+                });
 
             modelBuilder.Entity("Student_Portal.Models.DepartmentMaster", b =>
                 {
@@ -46,6 +75,17 @@ namespace Student_Portal.Migrations
                     b.HasKey("DepartmentId");
 
                     b.ToTable("departmentMasters");
+                });
+
+            modelBuilder.Entity("Student_Portal.Models.CourseMaster", b =>
+                {
+                    b.HasOne("Student_Portal.Models.DepartmentMaster", "DepartmentMaster")
+                        .WithMany()
+                        .HasForeignKey("DepartmentID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DepartmentMaster");
                 });
 #pragma warning restore 612, 618
         }

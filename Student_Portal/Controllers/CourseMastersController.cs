@@ -3,23 +3,24 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Student_Portal.Models;
 using Student_Portal.AppDbContext;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
-public class DepartmentMastersController : Controller
+public class CourseMastersController : Controller
 {
     private readonly ApplicationDbContext _context;
 
-    public DepartmentMastersController(ApplicationDbContext context)
+    public CourseMastersController(ApplicationDbContext context)
     {
         _context = context;
     }
 
-    // GET: DEPARTMENTMASTERS
+    // GET: COURSEMASTERS
     public async Task<IActionResult> Index()    
     {
-        return View(await _context.departmentMasters.ToListAsync());
+        return View(await _context.courseMasters.ToListAsync());
     }
 
-    // GET: DEPARTMENTMASTERS/Details/5
+    // GET: courseMasters/Details/5
     public async Task<IActionResult> Details(int? id)
     {
         if (id == null)
@@ -27,39 +28,41 @@ public class DepartmentMastersController : Controller
             return NotFound();
         }
 
-        var departmentmaster = await _context.departmentMasters
-            .FirstOrDefaultAsync(m => m.DepartmentId == id);
-        if (departmentmaster == null)
+        var coursemaster = await _context.courseMasters
+            .FirstOrDefaultAsync(m => m.courseID == id);
+        if (coursemaster == null)
         {
             return NotFound();
         }
 
-        return View(departmentmaster);
+        return View(coursemaster);
     }
 
-    // GET: DEPARTMENTMASTERS/Create
+    // GET: courseMasters/Create
     public IActionResult Create()
     {
+        ViewBag.DepartmentList = new SelectList(_context.departmentMasters, "DepartmentId", "DepartmentName");
         return View();
     }
 
-    // POST: DEPARTMENTMASTERS/Create
+    // POST: courseMasters/Create
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("DepartmentId,DepartmentName,DepartmentDescription,isActive")] DepartmentMaster departmentmaster)
+    public async Task<IActionResult> Create([Bind("courseID,CourseCode,CourseName,DepartmentID,Status")] CourseMaster coursemaster)
     {
         if (ModelState.IsValid)
         {
-            _context.Add(departmentmaster);
+            _context.Add(coursemaster);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        return View(departmentmaster);
+        ViewBag.DepartmentList = new SelectList( _context.departmentMasters , "DepartmentId", "DepartmentName");
+        return View(coursemaster);
     }
 
-    // GET: DEPARTMENTMASTERS/Edit/5
+    // GET: courseMasters/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null)
@@ -67,22 +70,22 @@ public class DepartmentMastersController : Controller
             return NotFound();
         }
 
-        var departmentmaster = await _context.departmentMasters.FindAsync(id);
-        if (departmentmaster == null)
+        var coursemaster = await _context.courseMasters.FindAsync(id);
+        if (coursemaster == null)
         {
             return NotFound();
         }
-        return View(departmentmaster);
+        return View(coursemaster);
     }
 
-    // POST: DEPARTMENTMASTERS/Edit/5
+    // POST: courseMasters/Edit/5
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("DepartmentId,DepartmentName,DepartmentDescription,isActive")] DepartmentMaster departmentmaster)
+    public async Task<IActionResult> Edit(int? id, [Bind("courseID,CourseCode,CourseName,DepartmentID,Status,DepartmentMaster")] CourseMaster coursemaster)
     {
-        if (id != departmentmaster.DepartmentId)
+        if (id != coursemaster.courseID)
         {
             return NotFound();
         }
@@ -91,12 +94,12 @@ public class DepartmentMastersController : Controller
         {
             try
             {
-                _context.Update(departmentmaster);
+                _context.Update(coursemaster);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!DepartmentMasterExists(departmentmaster.DepartmentId))
+                if (!CourseMasterExists(coursemaster.courseID))
                 {
                     return NotFound();
                 }
@@ -107,10 +110,10 @@ public class DepartmentMastersController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
-        return View(departmentmaster);
+        return View(coursemaster);
     }
 
-    // GET: DEPARTMENTMASTERS/Delete/5
+    // GET: courseMasters/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -118,33 +121,33 @@ public class DepartmentMastersController : Controller
             return NotFound();
         }
 
-        var departmentmaster = await _context.departmentMasters
-            .FirstOrDefaultAsync(m => m.DepartmentId == id);
-        if (departmentmaster == null)
+        var coursemaster = await _context.courseMasters
+            .FirstOrDefaultAsync(m => m.courseID == id);
+        if (coursemaster == null)
         {
             return NotFound();
         }
 
-        return View(departmentmaster);
+        return View(coursemaster);
     }
 
-    // POST: DEPARTMENTMASTERS/Delete/5
+    // POST: courseMasters/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int? id)
     {
-        var departmentmaster = await _context.departmentMasters.FindAsync(id);
-        if (departmentmaster != null)
+        var coursemaster = await _context.courseMasters.FindAsync(id);
+        if (coursemaster != null)
         {
-            _context.departmentMasters.Remove(departmentmaster);
+            _context.courseMasters.Remove(coursemaster);
         }
 
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
 
-    private bool DepartmentMasterExists(int? id)
+    private bool CourseMasterExists(int? id)
     {
-        return _context.departmentMasters.Any(e => e.DepartmentId == id);
+        return _context.courseMasters.Any(e => e.courseID == id);
     }
 }

@@ -8,5 +8,9 @@ namespace Student_Portal.AppDbContext
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         public DbSet<DepartmentMaster> departmentMasters { get; set; }
+
+        public DbSet<CourseMaster> courseMasters { get; set; }
+
+
     }
 }

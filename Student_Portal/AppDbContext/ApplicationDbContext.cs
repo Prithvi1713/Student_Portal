@@ -11,6 +11,8 @@ namespace Student_Portal.AppDbContext
 
         public DbSet<CourseMaster> courseMasters { get; set; }
 
+        public DbSet<StudentMaster> studentMasters { get; set; }
+
 
     }
 }

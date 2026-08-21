@@ -1,0 +1,184 @@
+@model Student_Portal.Models.StudentMaster
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>StudentMaster</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MiddleName" class="control-label"></label>
+                <input asp-for="MiddleName" class="form-control" />
+                <span asp-validation-for="MiddleName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MobileNo" class="control-label"></label>
+                <input asp-for="MobileNo" class="form-control" />
+                <span asp-validation-for="MobileNo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EmailAddress" class="control-label"></label>
+                <input asp-for="EmailAddress" class="form-control" />
+                <span asp-validation-for="EmailAddress" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="BirthDate" class="control-label"></label>
+                <input asp-for="BirthDate" type="date" class="form-control" />
+                <span asp-validation-for="BirthDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+
+                <label asp-for="DepartmentID"
+                       class="control-label">
+                    Department
+                </label>
+
+                <select asp-for="DepartmentID"
+                        asp-items="ViewBag.DepartmentList"
+                        class="form-control">
+
+                    <option value="">
+                        -- Select Department --
+                    </option>
+
+                </select>
+
+                <span asp-validation-for="DepartmentID"
+                      class="text-danger"></span>
+
+            </div>
+            <div class="form-group mb-3">
+
+                <label asp-for="CourseID"
+                       class="control-label">
+                    Course
+                </label>
+
+                <select asp-for="CourseID"
+                        asp-items="ViewBag.CourseList"
+                        class="form-control">
+
+                    <option value="">
+                        -- Select Course --
+                    </option>
+
+                </select>
+
+                <span asp-validation-for="CourseID"
+                      class="text-danger"></span>
+
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <input asp-for="Status" class="form-check-input" />
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+
+                <label class="control-label d-block">
+                    Gender
+                </label>
+
+                <div class="form-check form-check-inline">
+
+                    <input class="form-check-input"
+                           type="radio"
+                           asp-for="Gender"
+                           value="Male"
+                           id="genderMale" />
+
+                    <label class="form-check-label"
+                           for="genderMale">
+                        Male
+                    </label>
+
+                </div>
+
+                <div class="form-check form-check-inline">
+
+                    <input class="form-check-input"
+                           type="radio"
+                           asp-for="Gender"
+                           value="Female"
+                           id="genderFemale" />
+
+                    <label class="form-check-label"
+                           for="genderFemale">
+                        Female
+                    </label>
+                </div>
+
+                <div class="form-check form-check-inline">
+
+                    <input class="form-check-input"
+                           type="radio"
+                           asp-for="Gender"
+                           value="Trans"
+                           id="genderTrans" />
+
+                    <label class="form-check-label"
+                           for="genderTrans">
+                        Trans
+                    </label>
+
+                </div>
+
+                <br />
+
+                <span asp-validation-for="Gender"
+                      class="text-danger"></span>
+
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+
+            @*  <div class="form-group">
+                <label asp-for="DepartmentMaster" class="control-label"></label>
+                <input asp-for="DepartmentMaster" class="form-control" />
+                <span asp-validation-for="DepartmentMaster" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CourseMaster" class="control-label"></label>
+                <input asp-for="CourseMaster" class="form-control" />
+                <span asp-validation-for="CourseMaster" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
